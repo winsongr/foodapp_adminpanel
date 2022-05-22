@@ -99,6 +99,29 @@
       // Service workers not supported. Just drop the <script> tag.
       loadMainDartJs();
     }
+</script>
+<script>
+    // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDJKCZO8Gx4rbrOHS0T72dzxZrBnZlpk4c",
+    authDomain: "w-foodapp.firebaseapp.com",
+    projectId: "w-foodapp",
+    storageBucket: "w-foodapp.appspot.com",
+    messagingSenderId: "671738279221",
+    appId: "1:671738279221:web:b439b5127bffbc25e0087c",
+    measurementId: "G-BXE3S9VHCH"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
   </script>
 </body>
 </html>
