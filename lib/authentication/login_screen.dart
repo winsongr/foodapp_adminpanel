@@ -1,3 +1,6 @@
+import 'package:adminpanel/main_screens/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,6 +13,77 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String adminEmail = "";
   String adminPassword = "";
+  allowAdminToLogin() async {
+    SnackBar snackBar = const SnackBar(
+      content: Text(
+        "Checking Credentials, Please Wait...",
+        style: TextStyle(
+          fontSize: 36,
+          color: Colors.black,
+        ),
+      ),
+      backgroundColor: Colors.pinkAccent,
+      duration: Duration(
+        seconds: 6,
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    User? currentAdmin;
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+      email: adminEmail,
+      password: adminPassword,
+    )
+        .then((fAuth) {
+      currentAdmin = fAuth.user;
+    }).catchError((onError) {
+      final snackBar = SnackBar(
+        content: Text(
+          "Error Occured:" + onError.toString(),
+          style: const TextStyle(
+            fontSize: 36,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.pinkAccent,
+        duration: const Duration(
+          seconds: 5,
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+    if (currentAdmin != null) {
+      await FirebaseFirestore.instance
+          .collection("admins")
+          .doc(currentAdmin!.uid)
+          .get()
+          .then((snap) {
+        if (snap.exists) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (c) => const HomeScreen(),
+            ),
+          );
+        } else {
+          SnackBar snackBar = const SnackBar(
+            content: Text(
+              "Not found",
+              style: TextStyle(
+                fontSize: 36,
+                color: Colors.black,
+              ),
+            ),
+            backgroundColor: Colors.pinkAccent,
+            duration: Duration(
+              seconds: 6,
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +164,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 10,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      allowAdminToLogin();
+                    },
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all(
                         const EdgeInsets.symmetric(

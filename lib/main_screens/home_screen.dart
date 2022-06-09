@@ -207,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(20),
-                      primary: Color.fromARGB(255, 0, 255, 85),
+                      primary: const Color.fromARGB(255, 0, 255, 85),
                     ),
                   ),
                   const SizedBox(
@@ -228,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(18),
-                      primary: Color.fromARGB(255, 255, 8, 0),
+                      primary: const Color.fromARGB(255, 255, 8, 0),
                     ),
                   ),
                 ],

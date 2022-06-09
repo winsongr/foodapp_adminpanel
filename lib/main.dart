@@ -1,8 +1,9 @@
 import 'package:adminpanel/authentication/login_screen.dart';
-import 'package:adminpanel/main_screens/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
